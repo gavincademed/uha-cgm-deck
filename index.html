@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CADE Medical · CGM Partnership · UHA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600;1,9..144,700;1,9..144,900&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0D1B2A; --ink-soft: #1B2A3D; --muted: #6B7280; --border: #E5E7EB;
+    --bg: #FAFAF7; --page: #FFFFFF; --surface: #F6F7F9;
+    --accent: #C2833A; --accent-dark: #9E6A2E; --green: #2F7D4F; --red: #B23A48;
+    --gray-dark: #374151; --gray-mid: #9CA3AF; --gray-lt: #D1D5DB;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter Tight', -apple-system, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(13,27,42,0.97); backdrop-filter: blur(8px); color: white; padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid var(--gray-dark); font-size: 12px; letter-spacing: 0.08em; }
+  .nav-brand { font-weight: 700; }
+  .nav-brand span { color: var(--accent); }
+  .nav-actions { display: flex; gap: 16px; align-items: center; }
+  .nav-btn { background: transparent; border: 1px solid var(--gray-dark); color: white; padding: 6px 14px; font-family: inherit; font-size: 11px; letter-spacing: 0.1em; font-weight: 600; cursor: pointer; border-radius: 2px; transition: all 0.15s; }
+  .nav-btn:hover { background: var(--accent); border-color: var(--accent); }
+  .page { width: 11in; min-height: 8.5in; max-width: 100%; margin: 56px auto 32px; background: var(--page); padding: 0.7in 0.75in 0.6in; box-shadow: 0 2px 24px rgba(13,27,42,0.08); border-radius: 2px; position: relative; page-break-after: always; break-after: page; display: flex; flex-direction: column; }
+  .page:first-of-type { margin-top: 72px; }
+  .page:last-of-type { page-break-after: auto; break-after: auto; }
+  .page-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 28px; font-size: 10px; letter-spacing: 0.14em; font-weight: 600; }
+  .page-header .brand span { color: var(--accent); }
+  .page-header .section-label { color: var(--muted); }
+  .page-footer { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); letter-spacing: 0.14em; font-weight: 600; }
+  .kicker-label { font-size: 10px; letter-spacing: 0.18em; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+  .headline { font-family: 'Fraunces', serif; font-weight: 700; font-size: 42px; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); font-style: italic; margin-bottom: 16px; }
+  .lede { font-size: 14px; color: var(--ink-soft); font-style: italic; max-width: 64ch; margin-bottom: 24px; }
+  .cover { padding: 0.9in 0.75in; }
+  .cover-brand { font-size: 14px; letter-spacing: 0.2em; font-weight: 700; margin-bottom: 80px; }
+  .cover-brand span { color: var(--accent); }
+  .cover-kicker { font-size: 12px; letter-spacing: 0.22em; font-weight: 700; color: var(--accent); margin-bottom: 24px; }
+  .cover-month { font-family: 'Fraunces', serif; font-weight: 900; font-style: italic; font-size: 96px; line-height: 0.95; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 12px; }
+  .cover-subtitle { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 36px; line-height: 1.18; color: var(--ink-soft); margin-bottom: 40px; max-width: 32ch; }
+  .cover-rule { width: 60px; height: 2px; background: var(--accent); margin-bottom: 14px; }
+  .cover-period { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--ink-soft); }
+  .stat-grid { display: grid; gap: 14px; }
+  .stat-grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .stat { background: var(--surface); padding: 20px 22px; border-radius: 2px; }
+  .stat.dark { background: var(--ink); color: white; }
+  .stat-label { font-size: 10px; letter-spacing: 0.14em; font-weight: 700; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
+  .stat-value { font-family: 'Fraunces', serif; font-style: italic; font-weight: 700; font-size: 44px; line-height: 1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 8px; }
+  .stat.dark .stat-value { color: white; }
+  .stat-value.smaller { font-size: 32px; }
+  .stat-sub { font-size: 11px; color: var(--muted); }
+  .stat.dark .stat-sub { color: var(--gray-mid); }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .data-table td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  .chart-title { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .two-col-even { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .callout { background: var(--surface); border-left: 4px solid var(--accent); padding: 14px 18px; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+  .callout strong { color: var(--accent); font-weight: 700; }
+  .callout-dark { background: var(--ink); color: white; padding: 18px 22px; border-left: 4px solid var(--accent); }
+  .callout-dark .label { font-size: 10px; letter-spacing: 0.14em; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+  .callout-dark p { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; line-height: 1.4; }
+  .src { font-size: 10px; color: var(--muted); line-height: 1.5; }
+  .src a { color: var(--accent); text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .nav { padding: 10px 14px; font-size: 10px; }
+    .page { width: 100%; min-height: auto; margin: 56px 0 14px; padding: 22px 16px 18px; box-shadow: 0 1px 8px rgba(13,27,42,0.06); border-radius: 0; }
+    .headline { font-size: 28px; }
+    .lede { font-size: 13px; max-width: 100%; }
+    .cover-month { font-size: 56px; }
+    .cover-subtitle { font-size: 22px; }
+    .stat-grid-2, .stat-grid-3 { grid-template-columns: 1fr; }
+    .two-col-even { grid-template-columns: 1fr; gap: 16px; }
+    .data-table { font-size: 11px; }
+  }
+  @media print {
+    @page { size: 11in 8.5in landscape; margin: 0; }
+    html, body { background: white !important; }
+    .nav { display: none !important; }
+    .page { width: 11in; min-height: 8.5in; margin: 0; box-shadow: none; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">CADE <span>MEDICAL</span> · CGM PARTNERSHIP · UHA</div>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="window.print()">Print / PDF</button>
+    <button class="nav-btn" onclick="document.documentElement.requestFullscreen()">Fullscreen</button>
+  </div>
+</nav>
+
+<!-- COVER -->
+<section class="page cover">
+  <div class="cover-brand">CADE <span>MEDICAL</span></div>
+  <div class="cover-kicker">CGM AND DIABETIC SUPPLIES</div>
+  <h1 class="cover-month">CGM.</h1>
+  <div class="cover-subtitle">A partnership for UHA.</div>
+  <div class="cover-rule"></div>
+  <div class="cover-period">2026 · Confidential</div>
+</section>
+
+<!-- 1. RETENTION WITH DME -->
+<section class="page">
+  <div class="page-header"><div class="brand">CADE <span>MEDICAL</span></div><div class="section-label">RETENTION WITH DME</div></div>
+  <h2 class="headline">Patients stay on therapy with DME.</h2>
+  <p class="lede">CGM only works if the patient keeps wearing it. DME keeps them on it.</p>
+
+  <div class="two-col-even" style="gap: 18px; margin-top: 4px;">
+    <div class="stat dark" style="padding: 24px 28px;">
+      <div class="stat-label">CGM Patient Retention</div>
+      <div style="display: flex; gap: 24px; align-items: center; margin-top: 14px;">
+        <div>
+          <div style="font-size: 10px; letter-spacing: 0.12em; color: var(--gray-mid); margin-bottom: 4px; font-weight: 700;">PHARMACY</div>
+          <div style="font-family: 'Fraunces', serif; font-style: italic; font-weight: 700; font-size: 44px; color: white; line-height: 1;">~60%</div>
+        </div>
+        <div style="font-size: 22px; color: var(--accent); font-weight: 700;">&rarr;</div>
+        <div>
+          <div style="font-size: 10px; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 4px; font-weight: 700;">DME</div>
+          <div style="font-family: 'Fraunces', serif; font-style: italic; font-weight: 700; font-size: 44px; color: var(--accent); line-height: 1;">~85%</div>
+        </div>
+      </div>
+      <div style="font-size: 11px; color: var(--gray-lt); margin-top: 14px; line-height: 1.4;">DME retention runs 20&ndash;30% higher than the pharmacy benefit. Per AAHomecare.</div>
+    </div>
+    <div>
+      <div class="chart-title">Why retention is higher under DME</div>
+      <table class="data-table" style="margin-top: 10px;">
+        <tbody>
+          <tr><td><strong>90-day check</strong></td><td>CMS requires DME to follow up before each resupply</td></tr>
+          <tr><td><strong>Onboarding</strong></td><td>Sensor training, app pairing at the start</td></tr>
+          <tr><td><strong>Continuity</strong></td><td>Proactive resupply, no gaps in therapy</td></tr>
+          <tr><td><strong>Support</strong></td><td>Dedicated staff for troubleshooting</td></tr>
+          <tr><td><strong>Relationship</strong></td><td>Direct, ongoing contact with the patient</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout-dark" style="margin-top: 22px;"><div class="label">THE NATIONAL DATA</div><p>Patients sourcing CGM through DME show 23% higher adherence and 35% lower total health care costs than the pharmacy channel.</p></div>
+
+  <div class="src" style="margin-top: 14px;">Sources: <a href="https://aahomecare.org/files/galleries/AAHomecare_AHCA_CGM_Comments.pdf" target="_blank">American Association for Homecare (2024)</a> &middot; Allaire et al., <a href="https://diabetesjournals.org/clinical/article/43/3/399/158023/Impact-of-Continuous-Glucose-Monitoring-Sourcing" target="_blank"><em>Clinical Diabetes</em> 2025;43(3):399&ndash;408</a> &middot; <a href="https://www.jmir.org/" target="_blank">Allaire et al., <em>JMIR Diabetes</em> 2024;9:e58832</a>. CADE cites national data; CADE does not hold direct outcomes data.</div>
+
+  <div class="page-footer"><div>CADE MEDICAL · CGM PARTNERSHIP · UHA</div><div>01</div></div>
+</section>
+
+<!-- 2. COST: PHARMACY VS DME -->
+<section class="page">
+  <div class="page-header"><div class="brand">CADE <span>MEDICAL</span></div><div class="section-label">COST · PHARMACY VS DME</div></div>
+  <h2 class="headline">DME costs UHA less.</h2>
+  <p class="lede">Higher adherence means lower total cost of care. The national claims data shows it directly.</p>
+
+  <div class="chart-title" style="margin-bottom: 12px;">Total health care cost, 12 months &middot; Medicare/Medicare Advantage cohort</div>
+  <div class="two-col-even" style="gap: 18px; margin-bottom: 18px;">
+    <div class="stat" style="border-left: 4px solid var(--red); background: rgba(178,58,72,0.06);">
+      <div class="stat-label" style="color: var(--red);">PHARMACY</div>
+      <div class="stat-value smaller">$15,029</div>
+      <div class="stat-sub">Total cost per adherent patient at 12 months</div>
+    </div>
+    <div class="stat dark">
+      <div class="stat-label">DME</div>
+      <div class="stat-value smaller">$11,154</div>
+      <div class="stat-sub">~$3,875 lower per patient at 12 months</div>
+    </div>
+  </div>
+
+  <div class="callout" style="background: rgba(47,125,79,0.07); border-left: 4px solid var(--green); margin-bottom: 18px;"><strong style="color: var(--green);">The gap holds at every interval.</strong> DME cost was lower than pharmacy at 3, 6, 9, and 12 months, every comparison statistically significant. A separate matched study found pharmacy total cost of care ran 53% higher than DME.</div>
+
+  <div class="two-col-even" style="gap: 24px;">
+    <div>
+      <div class="chart-title">Why pharmacy costs more</div>
+      <table class="data-table" style="margin-top: 10px;">
+        <tbody>
+          <tr><td><strong>Lower adherence</strong></td><td>More gaps, more uncontrolled glucose</td></tr>
+          <tr><td><strong>Higher utilization</strong></td><td>More ER visits and inpatient days</td></tr>
+          <tr><td><strong>Rebate-driven pricing</strong></td><td>PBM rebates don't lower member cost</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="callout-dark"><div class="label">FOR UHA</div><p>This is real savings. Fewer ER visits, fewer admissions, more patients in control.</p></div>
+    </div>
+  </div>
+
+  <div class="src" style="margin-top: 14px;">Source: Allaire et al., <a href="https://diabetesjournals.org/clinical/article/43/3/399/158023/Impact-of-Continuous-Glucose-Monitoring-Sourcing" target="_blank"><em>Clinical Diabetes</em> 2025;43(3):399&ndash;408</a>, Table 2 (n = 854 Medicare/MA). 53% TCOC figure: Allaire et al., <a href="https://diabetesjournals.org/clinical/article/43/3/399/158023/Impact-of-Continuous-Glucose-Monitoring-Sourcing" target="_blank"><em>JMIR Diabetes</em> 2024;9:e58832</a>. Funded by CCS Medical.</div>
+
+  <div class="page-footer"><div>CADE MEDICAL · CGM PARTNERSHIP · UHA</div><div>02</div></div>
+</section>
+
+<!-- 3. WHERE THE DOLLAR GOES -->
+<section class="page">
+  <div class="page-header"><div class="brand">CADE <span>MEDICAL</span></div><div class="section-label">WHERE THE DOLLAR GOES</div></div>
+  <h2 class="headline">Pharmacy skims off the top.</h2>
+  <p class="lede">A PBM sits between UHA and the patient. DME does not.</p>
+
+  <div style="margin-bottom: 24px; margin-top: 8px;">
+    <div style="font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: 0.06em; margin-bottom: 8px;">PHARMACY $1</div>
+    <div style="display:flex; height: 52px; overflow: hidden; border-radius: 2px;">
+      <div style="background: var(--gray-mid); width: 42%; display:flex; align-items:center; padding: 0 12px; color:white; font-size:12px; font-weight:700;">PRODUCT 42%</div>
+      <div style="background: var(--accent); width: 8%; display:flex; align-items:center; padding: 0 6px; color:white; font-size:10px; font-weight:700;">SVC 8%</div>
+      <div style="background: var(--accent-dark); width: 8%; display:flex; align-items:center; padding: 0 6px; color:white; font-size:10px; font-weight:700;">DISP 8%</div>
+      <div style="background: var(--red); width: 30%; display:flex; align-items:center; padding: 0 12px; color:white; font-size:12px; font-weight:700; letter-spacing: 0.06em;">PBM CUT 30%</div>
+      <div style="background: #8B2C38; width: 12%; display:flex; align-items:center; padding: 0 8px; color:white; font-size:11px; font-weight:700;">WASTE 12%</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 24px;">
+    <div style="font-size: 12px; font-weight: 700; color: var(--ink); letter-spacing: 0.06em; margin-bottom: 8px;">CADE DME $1</div>
+    <div style="display:flex; height: 52px; overflow: hidden; border-radius: 2px;">
+      <div style="background: var(--gray-mid); width: 42%; display:flex; align-items:center; padding: 0 12px; color:white; font-size:12px; font-weight:700;">PRODUCT 42%</div>
+      <div style="background: var(--accent); width: 15%; display:flex; align-items:center; padding: 0 8px; color:white; font-size:10px; font-weight:700;">SVC 15%</div>
+      <div style="background: var(--accent-dark); width: 5%; display:flex; align-items:center; padding: 0 4px; color:white; font-size:9px; font-weight:700;">DISP 5%</div>
+      <div style="background: var(--green); width: 38%; display:flex; align-items:center; padding: 0 12px; color:white; font-size:13px; font-weight:700; letter-spacing: 0.06em;">UHA SAVINGS 38%</div>
+    </div>
+  </div>
+
+  <div class="callout"><strong>No PBM in the middle.</strong> What pharmacy loses to the PBM cut and waste, DME returns to UHA as savings.</div>
+
+  <div class="src" style="margin-top: 14px;">Illustrative. PBM cut reflects spread pricing, rebate aggregation, and admin fees. Same product at the end of the day, but under DME the 90-day touches keep it more controlled, which removes the waste that runs through pharmacy.</div>
+
+  <div class="page-footer"><div>CADE MEDICAL · CGM PARTNERSHIP · UHA</div><div>03</div></div>
+</section>
+
+<!-- 3. THE NINETY-DAY REQUIREMENT -->
+<section class="page">
+  <div class="page-header"><div class="brand">CADE <span>MEDICAL</span></div><div class="section-label">THE DME REQUIREMENT</div></div>
+  <h2 class="headline">DME has to follow up. Pharmacy doesn't.</h2>
+  <p class="lede">Every ninety days, DME has to confirm the patient is still using the device before sending the next supply. That check is why adherence holds.</p>
+
+  <div class="two-col-even" style="gap: 24px; margin-top: 8px;">
+    <div>
+      <div class="chart-title">The DME 90-day resupply cycle</div>
+      <table class="data-table" style="margin-top: 10px;">
+        <tbody>
+          <tr><td><strong>Every 90 days</strong></td><td>Confirm continued use before resupply ships</td></tr>
+          <tr><td><strong>Documentation</strong></td><td>Medical necessity, insulin, hypoglycemia history</td></tr>
+          <tr><td><strong>Visit cadence</strong></td><td>Routine in-person or telehealth follow-up</td></tr>
+          <tr><td><strong>Adherence check</strong></td><td>Utilization reviewed; outreach if it drops</td></tr>
+          <tr><td><strong>Replacement</strong></td><td>Failed sensors caught and replaced fast</td></tr>
+        </tbody>
+      </table>
+      <div class="callout" style="margin-top: 14px;"><strong>This is the federal standard.</strong> Medicare covers CGM as DME and requires consistent device use and routine visits.</div>
+    </div>
+    <div>
+      <div class="callout-dark"><div class="label">PHARMACY MODEL</div><p>Fill the script, hand it over. No 90-day check. No follow-up if the patient stops. A sensor dispensed but never worn still bills.</p></div>
+      <div class="callout" style="margin-top: 14px; background: rgba(178,58,72,0.06); border-left-color: var(--red);"><strong style="color: var(--red);">Dropping off CGM costs more later.</strong> When patients fall off therapy, diabetes goes unmanaged and comorbidities pick up. The payor pays for it down the road.</div>
+      <div class="callout" style="margin-top: 14px;"><strong>CADE does this work.</strong> We carry the follow-up, the documentation, and the resupply checks. UHA gets one adherence story and one reporting source.</div>
+    </div>
+  </div>
+
+  <div class="src" style="margin-top: 14px;">Source: <a href="https://www.medicare.gov/coverage/therapeutic-continuous-glucose-monitors" target="_blank">CMS, Therapeutic CGM coverage</a> &middot; <a href="https://diabetes.org/advocacy/cgm-continuous-glucose-monitors/faqs-medicare-coverage" target="_blank">ADA, Medicare CGM coverage criteria</a>.</div>
+
+  <div class="page-footer"><div>CADE MEDICAL · CGM PARTNERSHIP · UHA</div><div>04</div></div>
+</section>
+
+<!-- 4. THE PHARMACY HEADACHE / PBM -->
+<section class="page">
+  <div class="page-header"><div class="brand">CADE <span>MEDICAL</span></div><div class="section-label">THE PHARMACY HEADACHE</div></div>
+  <h2 class="headline">Local pharmacies lose money on CGM.</h2>
+  <p class="lede">PBMs pay them less than it costs to buy and dispense the device. The pharmacy still has to do the follow-up. That is why they are walking away.</p>
+
+  <div class="two-col-even" style="gap: 24px; margin-top: 8px;">
+    <div>
+      <div class="chart-title">What the PBM does to the independent</div>
+      <table class="data-table" style="margin-top: 10px;">
+        <tbody>
+          <tr><td><strong>Below-cost pay</strong></td><td>Reimbursed under acquisition cost on some fills</td></tr>
+          <tr><td><strong>Spread pricing</strong></td><td>PBM keeps the gap between what UHA pays and the pharmacy gets</td></tr>
+          <tr><td><strong>DIR clawbacks</strong></td><td>Fees pulled back months after the fill</td></tr>
+          <tr><td><strong>Follow-up burden</strong></td><td>Pharmacy still chases resupply and documentation, unpaid</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="callout" style="background: rgba(178,58,72,0.06); border-left-color: var(--red);"><strong style="color: var(--red);">They lose twice.</strong> They lose money on the dispense, and they spend staff time on follow-up they aren't paid for. CGM is one of the first product lines independents drop.</div>
+      <div class="callout-dark" style="margin-top: 14px;"><div class="label">THE PATTERN</div><p>Over 3,250 net pharmacy closures in 2024 alone, independents hit hardest. CGM is exactly the kind of high-cost, low-margin line they cut first.</p></div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 18px;"><strong>CADE is the relief valve.</strong> Pharmacies leave CGM because it loses money and eats their time. We take on the dispensing, documentation, and follow-up. We do not compete with them. We take the part that is hurting them.</div>
+
+  <div class="src" style="margin-top: 14px;">Sources: <a href="https://www.drugtopics.com/view/retail-independent-pharmacies-continue-to-call-for-improved-reimbursement-practices" target="_blank">Drug Topics (2025)</a> &middot; <a href="https://www.medben.com/pbm-independent-pharmacies-2/" target="_blank">NCPA via MedBen (2025)</a> &middot; <a href="https://www.ftc.gov/" target="_blank">FTC interim staff report on PBMs</a>.</div>
+
+  <div class="page-footer"><div>CADE MEDICAL · CGM PARTNERSHIP · UHA</div><div>05</div></div>
+</section>
+
+<!-- 5. WE ARE LOCAL / CLOSE -->
+<section class="page">
+  <div class="page-header"><div class="brand">CADE <span>MEDICAL</span></div><div class="section-label">WHY CADE</div></div>
+  <h2 class="headline">We are local.</h2>
+  <p class="lede">Hawaii's DME since 1999. Decisions made here. Stock kept here. Reps live here.</p>
+
+  <div class="stat-grid stat-grid-3" style="margin-top: 8px; margin-bottom: 22px;">
+    <div class="stat"><div class="stat-label">Founded</div><div class="stat-value smaller">1999</div><div class="stat-sub">26 years in Hawaii</div></div>
+    <div class="stat dark"><div class="stat-label">DME Patients / Yr</div><div class="stat-value smaller">80,000+</div><div class="stat-sub">Across all product lines</div></div>
+    <div class="stat"><div class="stat-label">Coverage</div><div class="stat-value smaller">All islands</div><div class="stat-sub">On-island inventory</div></div>
+  </div>
+
+  <div class="two-col-even" style="gap: 24px;">
+    <div>
+      <div class="chart-title">What CADE brings to UHA</div>
+      <table class="data-table" style="margin-top: 10px;">
+        <tbody>
+          <tr><td><strong>Local stock</strong></td><td>On-island inventory, all islands</td></tr>
+          <tr><td><strong>Local reps</strong></td><td>Dedicated CGM and diabetic supplies team</td></tr>
+          <tr><td><strong>Full service</strong></td><td>Onboarding, documentation, resupply, replacement</td></tr>
+          <tr><td><strong>Systems</strong></td><td>Dexcom, Abbott, Beta Bionics, Medtronic, Tandem, Omnipod</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="callout-dark"><div class="label">HOW WE WORK</div><p>Hawaii-first. Patient-first. Transparent pricing to UHA. We partner with pharmacies on logistics. We do not compete with them.</p></div>
+      <div class="callout" style="margin-top: 14px;"><strong>Not a mainland company.</strong> Higher retention, lower cost, and the follow-up work done, by a local partner who answers to Hawaii.</div>
+    </div>
+  </div>
+
+  <div class="page-footer"><div>CADE MEDICAL · CGM PARTNERSHIP · UHA</div><div>06</div></div>
+</section>
+
+</body>
+</html>
